@@ -16,10 +16,7 @@ def grey(letter, count):
 
 
 def match_criteria(criteria, word):
-    for c in criteria:
-        if not c(word):
-            return False
-    return True
+    return all(map(lambda c: c(word), criteria))
 
 
 class Wordle:
