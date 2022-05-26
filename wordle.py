@@ -54,21 +54,14 @@ class Wordle:
             else:
                 raise ValueError("Illegal token: " + token)
 
-        self.w = list(w for w in self.w if match_criteria(criteria, w))
+        self.w = list(filter(lambda w: match_criteria(criteria, w), self.w))
         print("Narrowed down to {0} matches".format(len(self.w)))
         print("Suggested next guess is {0}".format(self.next_guess()))
 
     def next_guess(self):
         # Find a word that has the fewest letters already known to be present,
         # and the fewest repeated letters.
-        word_scores = [
-            [[], [], [], [], [], []],
-            [[], [], [], [], [], []],
-            [[], [], [], [], [], []],
-            [[], [], [], [], [], []],
-            [[], [], [], [], [], []],
-            [[], [], [], [], [], []]
-        ]
+        word_scores = [[[] for _ in range(6)] for _ in range(6)]
         for ww in self.w:
             wset = set(ww)
             ii = len(self.known_letters.intersection(wset))
