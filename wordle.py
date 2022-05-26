@@ -21,8 +21,8 @@ def match_criteria(criteria, word):
 
 class Wordle:
     def __init__(self, wordlist):
-        f = open(wordlist, 'r')
-        self.w = [word.strip().lower() for word in f.readlines()]
+        with open(wordlist, 'r') as f:
+            self.w = [word.strip().lower() for word in f.readlines()]
         self.known_letters = set()
 
     def try_word(self, guess, result):
