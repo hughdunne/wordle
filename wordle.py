@@ -38,9 +38,7 @@ class Wordle:
         letter_counter = Counter()
         for ii, token in enumerate(result):
             letter = guess[ii]
-            if token == '0':
-                criteria.append(grey(letter, letter_counter[letter]))
-            elif token == '1':
+            if token == '1':
                 letter_counter[letter] += 1
                 criteria.append(yellow(letter, ii))
                 self.known_letters.add(letter)
@@ -48,8 +46,12 @@ class Wordle:
                 letter_counter[letter] += 1
                 criteria.append(green(letter, ii))
                 self.known_letters.add(letter)
-            else:
+            elif token != '0':
                 raise ValueError("Illegal token: " + token)
+        for ii, token in enumerate(result):
+            letter = guess[ii]
+            if token == '0':
+                criteria.append(grey(letter, letter_counter[letter]))
 
         self.w = list(filter(lambda w: match_criteria(criteria, w), self.w))
         print("Narrowed down to {0} matches".format(len(self.w)))
